@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EcoPulse — Smart Urban Sustainability & Improvement System</title>
+  <meta name="description" content="Observe everyday urban operational patterns across transportation, electricity, water, waste, and green spaces, and simulate data-driven sustainability improvements.">
+  <meta name="theme-color" content="#07130E">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌱</text></svg>">
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            dark: '#07130E',
+            surface: '#0E1F18',
+            mint: '#A7F3D0',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- React 18 & ReactDOM 18 UMD -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+
+  <!-- Custom Design System Styling -->
+  <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body class="bg-dark text-slate-100 min-h-screen">
+  <div id="root"></div>
+
+  <!-- React Application ESM Entry Point -->
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>
