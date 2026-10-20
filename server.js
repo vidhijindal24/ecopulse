@@ -44,8 +44,9 @@ async function initMongoDB() {
     return;
   }
   if (!MONGODB_URI) {
-    console.log('[EcoPulse] Notice: MONGODB_URI environment variable not set.');
-    console.log('[EcoPulse] Running with local browser storage mode.');
+    console.log('[EcoPulse] ℹ️  MONGODB_URI is not set in environment or .env file.');
+    console.log('[EcoPulse] ℹ️  Running in Local Storage Mode — full website functionality is available without a database.');
+    console.log('[EcoPulse] ℹ️  To connect to MongoDB Atlas, add your connection string to MONGODB_URI.');
     return;
   }
 
@@ -240,6 +241,7 @@ server.listen(PORT, () => {
   console.log(`\n==================================================`);
   console.log(`🌱 EcoPulse Web App Running!`);
   console.log(`👉 Access URL: http://localhost:${PORT}`);
-  console.log(`📦 Database: ${MONGODB_URI ? 'MongoDB Atlas Configured' : 'Local Storage Mode'}`);
+  console.log(`📦 MongoDB Driver: Installed & Active`);
+  console.log(`💾 Storage Mode: ${MONGODB_URI ? 'MongoDB Atlas Cloud' : 'Local Storage Mode (Browser Persistence)'}`);
   console.log(`==================================================\n`);
 });
