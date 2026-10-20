@@ -110,8 +110,8 @@ export function RecommendationEngine({ plan, onAddToPlan, onRemoveFromPlan, onOp
   );
 }
 
-// User Improvement Plan Drawer Modal Component with Export Capabilities
-export function ImprovementPlanDrawer({ isOpen, onClose, plan, onRemoveItem, onClearAll }) {
+// User Improvement Plan Drawer Modal Component with Export & MongoDB Sync Capabilities
+export function ImprovementPlanDrawer({ isOpen, onClose, plan, onRemoveItem, onClearAll, onSyncCloud }) {
   if (!isOpen) return null;
 
   // Export Plan to Downloadable JSON File
@@ -147,7 +147,7 @@ export function ImprovementPlanDrawer({ isOpen, onClose, plan, onRemoveItem, onC
           }, '✕')
         ),
         React.createElement('p', { className: 'text-xs text-slate-400' },
-          'Selected sustainability intervention projects saved locally in browser state.'
+          'Selected sustainability intervention projects synced with MongoDB Atlas & local browser state.'
         )
       ),
 
@@ -174,15 +174,23 @@ export function ImprovementPlanDrawer({ isOpen, onClose, plan, onRemoveItem, onC
             )
       ),
 
-      // Footer Bar with Export Buttons
-      plan.length > 0 && React.createElement('div', { className: 'pt-4 border-t border-emerald-900/50 flex flex-col space-y-3' },
-        React.createElement('button', {
-          onClick: handleExportJSON,
-          className: 'w-full py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs flex items-center justify-center space-x-2 shadow-md'
-        },
-          React.createElement('span', null, '📥 Export Action Plan (JSON Report)'),
+      // Footer Bar with Export & Sync Buttons
+      plan.length > 0 && React.createElement('div', { className: 'pt-4 border-t border-emerald-900/50 flex flex-col space-y-2.5' },
+        React.createElement('div', { className: 'grid grid-cols-2 gap-2' },
+          React.createElement('button', {
+            onClick: handleExportJSON,
+            className: 'py-2.5 rounded-xl bg-slate-900 border border-emerald-900/60 hover:border-emerald-500/50 text-slate-200 font-bold text-xs flex items-center justify-center space-x-1.5 shadow'
+          },
+            React.createElement('span', null, '📥 Export JSON')
+          ),
+          React.createElement('button', {
+            onClick: onSyncCloud,
+            className: 'py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs flex items-center justify-center space-x-1.5 shadow-md'
+          },
+            React.createElement('span', null, '☁️ Sync to Atlas')
+          )
         ),
-        React.createElement('div', { className: 'flex items-center justify-between text-xs' },
+        React.createElement('div', { className: 'flex items-center justify-between text-xs pt-1' },
           React.createElement('button', {
             onClick: onClearAll,
             className: 'text-rose-400 hover:underline font-semibold'

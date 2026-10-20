@@ -1,0 +1,21 @@
+{
+  "name": "ecopulse",
+  "version": "1.0.0",
+  "description": "EcoPulse — Smart Urban Sustainability & Improvement System",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "mongodb": "^6.10.0"
+  },
+  "keywords": [
+    "smart-city",
+    "sustainability",
+    "urban-planning",
+    "mongodb",
+    "ecopulse"
+  ],
+  "author": "EcoPulse Team",
+  "license": "MIT"
+}

@@ -77,6 +77,39 @@ export function App() {
     setActivePresetId('default');
     showToast('Simulation parameters reset to baseline (0%).');
   };
+  // Sync Action Plan with MongoDB Atlas Backend
+  const syncPlanWithBackend = (updatedPlan) => {
+    fetch('/api/plan', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ plan: updatedPlan })
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          console.log('[EcoPulse] Action plan synced to MongoDB Atlas:', data.count, 'items');
+        }
+      })
+      .catch(err => {
+        console.log('[EcoPulse] Running in local offline storage mode:', err.message);
+      });
+  };
+
+  // Load saved plan from MongoDB on app mount (with localStorage fallback)
+  React.useEffect(() => {
+    fetch('/api/plan')
+      .then(res => res.json())
+      .then(data => {
+        if (data.success && Array.isArray(data.plan) && data.plan.length > 0) {
+          setPlan(data.plan);
+          savePlan(data.plan);
+          console.log('[EcoPulse] Loaded action plan from MongoDB Atlas:', data.plan.length, 'items');
+        }
+      })
+      .catch(err => {
+        console.log('[EcoPulse] Local storage mode active:', err.message);
+      });
+  }, []);
 
   // Add item to active improvement plan
   const handleAddToPlan = (item) => {
@@ -84,6 +117,7 @@ export function App() {
     const updated = [...plan, item];
     setPlan(updated);
     savePlan(updated);
+    syncPlanWithBackend(updated);
     showToast(`Added "${item.title}" to your Action Plan!`);
   };
 
@@ -92,6 +126,7 @@ export function App() {
     const updated = plan.filter(p => p.id !== id);
     setPlan(updated);
     savePlan(updated);
+    syncPlanWithBackend(updated);
     showToast('Removed item from your Action Plan.');
   };
 
@@ -99,6 +134,7 @@ export function App() {
   const handleClearPlan = () => {
     setPlan([]);
     savePlan([]);
+    syncPlanWithBackend([]);
     showToast('Action Plan cleared.');
   };
 
@@ -107,6 +143,7 @@ export function App() {
     localStorage.clear();
     setSliders(DEFAULT_SLIDERS);
     setPlan([]);
+    syncPlanWithBackend([]);
     setActivePresetId('default');
     showToast('App state & local storage reset to defaults.');
   };
@@ -201,7 +238,11 @@ export function App() {
       onClose: () => setPlanDrawerOpen(false),
       plan: plan,
       onRemoveItem: handleRemoveFromPlan,
-      onClearAll: handleClearPlan
+      onClearAll: handleClearPlan,
+      onSyncCloud: () => {
+        syncPlanWithBackend(plan);
+        showToast('Action Plan synchronized with MongoDB Atlas!');
+      }
     }),
 
     // Toast Notification Banner
